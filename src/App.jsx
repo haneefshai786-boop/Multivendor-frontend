@@ -1,43 +1,41 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import API from "./api/api"; // 👈 adjust path if needed (e.g. "../api/api")
 
-function App() {
-  const [message, setMessage] = useState("Click the button to test connection");
+const App = () => {
+  const [vendors, setVendors] = useState([]);
 
-  // ✅ Your Render backend URL
-  const API_BASE_URL = "https://multivendor-backend-6ozb.onrender.com";
-
-  const testConnection = async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/test`);
-      if (!res.ok) throw new Error("Backend not reachable");
-      const data = await res.text(); // or res.json() if backend sends JSON
-      setMessage(`✅ Backend Response: ${data}`);
-    } catch (err) {
-      console.error(err);
-      setMessage("❌ Failed to connect to backend");
-    }
-  };
+  useEffect(() => {
+    // Fetch vendors from your Render backend
+    API.get("/api/vendors")
+      .then((res) => {
+        console.log("✅ Vendors fetched:", res.data);
+        setVendors(res.data);
+      })
+      .catch((err) => {
+        console.error("❌ Error fetching vendors:", err);
+      });
+  }, []);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "100px", fontFamily: "sans-serif" }}>
-      <h2>Frontend-Backend Connection Test</h2>
-      <button
-        onClick={testConnection}
-        style={{
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          padding: "10px 20px",
-          borderRadius: "8px",
-          cursor: "pointer",
-          fontSize: "16px",
-        }}
-      >
-        Test Connection
-      </button>
-      <p style={{ marginTop: "20px", fontSize: "18px" }}>{message}</p>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">🛍 Vendor List</h1>
+
+      {vendors.length > 0 ? (
+        <ul className="space-y-2">
+          {vendors.map((vendor, index) => (
+            <li
+              key={index}
+              className="p-2 border rounded bg-gray-100 shadow-sm"
+            >
+              <strong>{vendor.name}</strong> — {vendor.category}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No vendors found.</p>
+      )}
     </div>
   );
-}
+};
 
 export default App;
