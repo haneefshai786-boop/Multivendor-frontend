@@ -1,0 +1,33 @@
+0 verbose cli /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/bin/npm
+1 info using npm@11.6.0
+2 info using node@v24.9.0
+3 silly config load:file:/data/data/com.termux/files/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/data/data/com.termux/files/home/.npmrc
+5 silly config load:file:/data/data/com.termux/files/usr/etc/npmrc
+6 verbose title npm create vite@latest multivendor-frontend
+7 verbose argv "create" "vite@latest" "multivendor-frontend"
+8 verbose logfile logs-max:10 dir:/data/data/com.termux/files/home/.npm/_logs/2025-10-31T15_04_57_409Z-
+9 verbose logfile /data/data/com.termux/files/home/.npm/_logs/2025-10-31T15_04_57_409Z-debug-0.log
+10 silly logfile done cleaning log files
+11 silly packumentCache heap:1174405120 maxSize:293601280 maxEntrySize:146800640
+12 http fetch GET 200 https://registry.npmjs.org/create-vite 752ms (cache miss)
+13 silly packumentCache heap:1174405120 maxSize:293601280 maxEntrySize:146800640
+14 silly idealTree buildDeps
+15 silly fetch manifest create-vite@8.0.2
+16 silly packumentCache full:https://registry.npmjs.org/create-vite cache-miss
+17 http fetch GET 200 https://registry.npmjs.org/create-vite 309ms (cache miss)
+18 silly packumentCache full:https://registry.npmjs.org/create-vite set size:undefined disposed:false
+19 silly placeDep ROOT create-vite@8.0.2 OK for:  want: 8.0.2
+20 silly reify moves {}
+21 silly audit bulk request { 'create-vite': [ '8.0.2' ] }
+22 http cache create-vite@https://registry.npmjs.org/create-vite/-/create-vite-8.0.2.tgz 0ms (cache hit)
+23 silly tarball no local data for create-vite@https://registry.npmjs.org/create-vite/-/create-vite-8.0.2.tgz. Extracting by manifest.
+24 http fetch GET 200 https://registry.npmjs.org/create-vite/-/create-vite-8.0.2.tgz 1276ms (cache miss)
+25 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 1416ms
+26 silly audit report {}
+27 verbose cwd /data/data/com.termux/files/home
+28 verbose os Linux 5.10.198-android12-9-00085-g226a9632f13d-ab11136126
+29 verbose node v24.9.0
+30 verbose npm  v11.6.0
+31 verbose exit 0
+32 info ok

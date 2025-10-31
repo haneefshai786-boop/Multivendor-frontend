@@ -1,0 +1,51 @@
+/* === Global Styles === */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* === Centered container for forms === */
+.container {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+}
+
+/* === Headings === */
+h1, h2, h3 {
+  font-weight: 600;
+  text-align: center;
+}
+
+/* === Buttons === */
+.btn {
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* === Links === */
+a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* === Input fields === */
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+}
