@@ -1,10 +1,9 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // uses .env value
+  baseURL: import.meta.env.VITE_API_BASE_URL, // 🔗 From your .env file
 });
 
-// Automatically attach token (optional but recommended)
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
   if (token) {
