@@ -1,53 +1,68 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
-export default function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+const apiBase = import.meta.env.VITE_API_URL || "https://multivendor-backend-30rr.onrender.com";
+
+function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    setError(""); setSuccess("");
     try {
-      const apiBase = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      await axios.post(`${apiBase}/api/auth/register`, form);
-      setSuccess("Registration successful — you can now log in.");
-      setForm({ name: "", email: "", password: "" });
+      const res = await axios.post(`${apiBase}/api/auth/register`, {
+        name,
+        email,
+        password,
+      });
+      if (res.data.success) {
+        alert("Registration successful!");
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      console.error(err);
+      setError("Registration failed");
     }
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: 420 }}>
-      <h3 className="mb-4">Register</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Name</label>
-          <input name="name" value={form.name} onChange={handleChange} className="form-control" required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input name="email" value={form.email} onChange={handleChange} type="email" className="form-control" required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input name="password" value={form.password} onChange={handleChange} type="password" className="form-control" required />
-        </div>
-
-        {error && <div className="text-danger mb-2">{error}</div>}
-        {success && <div className="text-success mb-2">{success}</div>}
-
-        <button className="btn btn-success w-100" type="submit">Register</button>
-      </form>
-
-      <p className="mt-3 text-center">
-        Already have an account? <Link to="/">Login</Link>
-      </p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
+        <form onSubmit={handleRegister}>
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full mb-3 p-2 border rounded"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full mb-3 p-2 border rounded"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full mb-3 p-2 border rounded"
+          />
+          {error && <p className="text-red-500 mb-2">{error}</p>}
+          <button
+            type="submit"
+            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+          >
+            Register
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
+
+export default Register;

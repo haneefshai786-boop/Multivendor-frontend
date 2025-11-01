@@ -1,47 +1,60 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
 
-export default function Login() {
+const apiBase = import.meta.env.VITE_API_URL || "https://multivendor-backend-30rr.onrender.com";
+
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
     try {
-      const apiBase = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const res = await axios.post(`${apiBase}/api/auth/login`, { email, password });
-      // Save token (example)
-      localStorage.setItem("token", res.data.token);
-      // Redirect to home
-      navigate("/home");
+      const res = await axios.post(`${apiBase}/api/auth/login`, {
+        email,
+        password,
+      });
+      if (res.data.success) {
+        alert("Login successful!");
+        localStorage.setItem("token", res.data.token);
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      console.error(err);
+      setError("Login failed");
     }
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: 420 }}>
-      <h3 className="mb-4">Login</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input value={email} onChange={e => setEmail(e.target.value)} type="email" className="form-control" required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="form-control" required />
-        </div>
-        {error && <div className="text-danger mb-2">{error}</div>}
-        <button className="btn btn-primary w-100" type="submit">Login</button>
-      </form>
-
-      <p className="mt-3 text-center">
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full mb-3 p-2 border rounded"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full mb-3 p-2 border rounded"
+          />
+          {error && <p className="text-red-500 mb-2">{error}</p>}
+          <button
+            type="submit"
+            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
+
+export default Login;
