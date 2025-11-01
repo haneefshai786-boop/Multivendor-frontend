@@ -1,68 +1,39 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
-const apiBase = import.meta.env.VITE_API_URL || "https://multivendor-backend-30rr.onrender.com";
-
-function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(`${apiBase}/api/auth/register`, {
-        name,
-        email,
-        password,
-      });
-      if (res.data.success) {
-        alert("Registration successful!");
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Registration failed");
-    }
-  };
-
+const Login = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
-        <form onSubmit={handleRegister}>
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full mb-3 p-2 border rounded"
-          />
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded-2xl shadow-md w-80">
+        <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+        <form>
           <input
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full mb-3 p-2 border rounded"
+            className="w-full p-2 mb-3 border rounded-lg"
           />
           <input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full mb-3 p-2 border rounded"
+            className="w-full p-2 mb-3 border rounded-lg"
           />
-          {error && <p className="text-red-500 mb-2">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+            className="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition"
           >
-            Register
+            Login
           </button>
         </form>
+
+        {/* Register link here */}
+        <p className="text-center text-sm text-gray-600 mt-4">
+          Don’t have an account?{" "}
+          <Link to="/register" className="text-blue-600 font-semibold hover:underline">
+            Register
+          </Link>
+        </p>
       </div>
     </div>
   );
-}
+};
 
-export default Register;
+export default Login;
