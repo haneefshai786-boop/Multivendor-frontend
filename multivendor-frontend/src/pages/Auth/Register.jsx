@@ -1,43 +1,59 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const Register = () => {
+function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async () => {
+    // 👇 this reads the backend URL from your .env
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    try {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("✅ Registered successfully!");
+        console.log("Response:", data);
+      } else {
+        alert("❌ Registration failed: " + (data.message || "Unknown error"));
+      }
+    } catch (error) {
+      console.error("Register error:", error);
+      alert("Something went wrong, please try again.");
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-2xl shadow-md w-80">
-        <h2 className="text-2xl font-semibold text-center mb-6">Register</h2>
-        <form>
-          <input
-            type="text"
-            placeholder="Name"
-            className="w-full p-2 mb-3 border rounded-lg"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full p-2 mb-3 border rounded-lg"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full p-2 mb-3 border rounded-lg"
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-          >
-            Register
-          </button>
-        </form>
+    <div className="register">
+      <h2>Sign Up</h2>
 
-        <p className="text-center text-sm text-gray-600 mt-4">
-          Already have an account?{" "}
-          <Link to="/" className="text-blue-600 font-semibold hover:underline">
-            Login
-          </Link>
-        </p>
-      </div>
+      <input
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        placeholder="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button onClick={handleRegister}>Register</button>
     </div>
   );
-};
+}
 
 export default Register;
